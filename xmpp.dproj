@@ -62,10 +62,10 @@
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
 			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-			<DCC_UnitSearchPath>E:\Solution\delphi\XMPP\new\synapse40\source\lib;E:\Solution\delphi\XMPP\new\xmpp\base;E:\Solution\delphi\XMPP\new\xmpp\client;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+			<DCC_UnitSearchPath>E:\Solution\delphi\XMPP\new\synapse40\source\lib;E:\Solution\delphi\XMPP\new\xmpp2\base;E:\Solution\delphi\XMPP\new\xmpp2\client;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
 			<VerInfo_Locale>1033</VerInfo_Locale>
-			<DCC_DcpOutput>E:\Solution\delphi\XMPP\new\xmpp\lib\</DCC_DcpOutput>
-			<DCC_DcuOutput>E:\Solution\delphi\XMPP\new\xmpp\lib\</DCC_DcuOutput>
+			<DCC_DcpOutput>E:\Solution\delphi\XMPP\new\xmpp2\lib\</DCC_DcpOutput>
+			<DCC_DcuOutput>E:\Solution\delphi\XMPP\new\xmpp2\lib\</DCC_DcuOutput>
 			<DCC_RemoteDebug>false</DCC_RemoteDebug>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">

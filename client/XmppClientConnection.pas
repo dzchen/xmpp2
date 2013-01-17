@@ -184,6 +184,7 @@ begin
   _extentions:=tlist.Create;
   FvCardManager := TXmppVCardManager.create(Self);
   AddExtention(FvCardManager);
+  AddExtention(_rostermanager);
 end;
 
 procedure TXmppClientConnection.AddExtention(ext: TXmppClientExtension);

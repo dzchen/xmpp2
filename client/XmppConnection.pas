@@ -145,7 +145,7 @@ end;
 
 destructor TXmppConnection.Destroy;
 begin
-  _lock.Free;
+  FreeAndNil(_lock);
   DestroyKeepAliveTimer;
   Close;
   SocketDisconnect;
@@ -157,8 +157,7 @@ begin
   if not Assigned(_keepalivetimer) then
     exit;
   _keepalivetimer.Enabled:=false;
-  _keepalivetimer.Free;
-  _keepalivetimer:=nil;
+  FreeAndNil(_keepalivetimer);
 end;
 
 procedure TXmppConnection.DoAfterUpgradedToSSL(Sender: TObject);
