@@ -1,0 +1,150 @@
+package xmpp;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vcl,
+  soaprtl,
+  IndyCore,
+  IndySystem,
+  IndyProtocols;
+
+contains
+  XmppClientConnection in 'client\XmppClientConnection.pas',
+  XmppUri in 'XmppUri.pas',
+  IqGrabber in 'client\IqGrabber.pas',
+  PacketGrabber in 'client\PacketGrabber.pas',
+  XmppConnection in 'client\XmppConnection.pas',
+  Xmpp.Iq.AgentIq in 'base\Xmpp.Iq.AgentIq.pas',
+  SecHash in 'util\SecHash.pas',
+  Xmpp.x.Delay in 'base\x\Xmpp.x.Delay.pas',
+  Xmpp.x.Event in 'base\x\Xmpp.x.Event.pas',
+  Xmpp.x.Field in 'base\x\Xmpp.x.Field.pas',
+  Xmpp.x.FieldContainer in 'base\x\Xmpp.x.FieldContainer.pas',
+  Xmpp.x.MUActor in 'base\x\Xmpp.x.MUActor.pas',
+  Xmpp.x.MUDecline in 'base\x\Xmpp.x.MUDecline.pas',
+  Xmpp.x.MUInvitation in 'base\x\Xmpp.x.MUInvitation.pas',
+  Xmpp.x.MUInvite in 'base\x\Xmpp.x.MUInvite.pas',
+  Xmpp.x.MUItem in 'base\x\Xmpp.x.MUItem.pas',
+  Xmpp.x.MUStatus in 'base\x\Xmpp.x.MUStatus.pas',
+  Xmpp.x.Option in 'base\x\Xmpp.x.Option.pas',
+  Xmpp.x.Data in 'base\x\Xmpp.x.Data.pas',
+  Xmpp.x.data.item in 'base\x\Xmpp.x.data.item.pas',
+  Xmpp.x.data.Reported in 'base\x\Xmpp.x.data.Reported.pas',
+  Xmpp.x.muc.User in 'base\x\Xmpp.x.muc.User.pas',
+  Xmpp.x.Value in 'base\x\Xmpp.x.Value.pas',
+  XMPPConst in 'XMPPConst.pas',
+  Element in 'base\Element.pas',
+  Jid in 'base\Jid.pas',
+  JidComparer in 'base\JidComparer.pas',
+  libxmlparser in 'base\libxmlparser.pas',
+  Xmpp.Stream.Error in 'base\Xmpp.Stream.Error.pas',
+  Xmpp.extensions.amp in 'base\Xmpp.extensions.amp.pas',
+  Xmpp.extensions.bytestreams in 'base\Xmpp.extensions.bytestreams.pas',
+  Xmpp.extensions.Compress in 'base\Xmpp.extensions.Compress.pas',
+  Xmpp.extensions.Compressed in 'base\Xmpp.extensions.Compressed.pas',
+  Xmpp.extensions.featureneg in 'base\Xmpp.extensions.featureneg.pas',
+  Xmpp.extensions.filetransfer in 'base\Xmpp.extensions.filetransfer.pas',
+  Xmpp.extensions.Rule in 'base\Xmpp.extensions.Rule.pas',
+  Xmpp.extensions.si in 'base\Xmpp.extensions.si.pas',
+  Xmpp.sasl.Mechanism in 'base\Xmpp.sasl.Mechanism.pas',
+  Xmpp.sasl.Mechanisms in 'base\Xmpp.sasl.Mechanisms.pas',
+  Xmpp.sasl in 'base\Xmpp.sasl.pas',
+  Xmpp.stream.feature.compression.Compression in 'base\Xmpp.stream.feature.compression.Compression.pas',
+  Xmpp.stream.feature.compression.Method in 'base\Xmpp.stream.feature.compression.Method.pas',
+  Xmpp.stream.feature.Register in 'base\Xmpp.stream.feature.Register.pas',
+  Xmpp.stream.Features in 'base\Xmpp.stream.Features.pas',
+  Xmpp.steam.Stream in 'base\Xmpp.steam.Stream.pas',
+  Xmpp.tls.Proceed in 'base\Xmpp.tls.Proceed.pas',
+  Xmpp.tls.StartTls in 'base\Xmpp.tls.StartTls.pas',
+  saslauth in 'base\saslauth.pas',
+  stringprep in 'base\stringprep.pas',
+  tcpsynapse in 'base\tcpsynapse.pas',
+  xmltag in 'base\xmltag.pas',
+  Xmpp.Avatar in 'base\Xmpp.Avatar.pas',
+  Xmpp.Client.Error in 'base\Xmpp.Client.Error.pas',
+  Xmpp.Client.IQ in 'base\Xmpp.Client.IQ.pas',
+  Xmpp.client.Message in 'base\Xmpp.client.Message.pas',
+  Xmpp.Client.Presence in 'base\Xmpp.Client.Presence.pas',
+  Xmpp.Client.PresenceManager in 'base\Xmpp.Client.PresenceManager.pas',
+  Xmpp.DirectionalElement in 'base\Xmpp.DirectionalElement.pas',
+  Xmpp.extensions.Capabilities in 'base\Xmpp.extensions.Capabilities.pas',
+  Xmpp.extensions.Chatstate in 'base\Xmpp.extensions.Chatstate.pas',
+  Xmpp.extensions.html.Body in 'base\Xmpp.extensions.html.Body.pas',
+  Xmpp.extensions.html.Html in 'base\Xmpp.extensions.html.Html.pas',
+  Xmpp.extentions.Nickname in 'base\Xmpp.extentions.Nickname.pas',
+  Xmpp.extentions.Primary in 'base\Xmpp.extentions.Primary.pas',
+  xmpp.group in 'base\xmpp.group.pas',
+  Xmpp.Iq.Auth in 'base\Xmpp.Iq.Auth.pas',
+  Xmpp.iq.AuthIq in 'base\Xmpp.iq.AuthIq.pas',
+  Xmpp.Iq.BindIq in 'base\Xmpp.Iq.BindIq.pas',
+  Xmpp.Iq.DiscoFeature in 'base\Xmpp.Iq.DiscoFeature.pas',
+  Xmpp.Iq.DiscoIdentity in 'base\Xmpp.Iq.DiscoIdentity.pas',
+  Xmpp.Iq.DiscoInfo in 'base\Xmpp.Iq.DiscoInfo.pas',
+  Xmpp.Iq.DiscoInfoIq in 'base\Xmpp.Iq.DiscoInfoIq.pas',
+  Xmpp.Iq.DiscoItem in 'base\Xmpp.Iq.DiscoItem.pas',
+  Xmpp.Iq.DiscoItems in 'base\Xmpp.Iq.DiscoItems.pas',
+  Xmpp.Iq.DiscoItemsIq in 'base\Xmpp.Iq.DiscoItemsIq.pas',
+  Xmpp.Iq.DiscoManager in 'base\Xmpp.Iq.DiscoManager.pas',
+  Xmpp.Iq.Register in 'base\Xmpp.Iq.Register.pas',
+  Xmpp.iq.RegisterEventArgs in 'base\Xmpp.iq.RegisterEventArgs.pas',
+  Xmpp.iq.roster.Delimiter in 'base\Xmpp.iq.roster.Delimiter.pas',
+  xmpp.iq.Roster in 'base\xmpp.iq.Roster.pas',
+  Xmpp.Iq.RosterIq in 'base\Xmpp.Iq.RosterIq.pas',
+  Xmpp.Iq.RosterItem in 'base\Xmpp.Iq.RosterItem.pas',
+  RosterManager in 'client\RosterManager.pas',
+  Xmpp.Iq.SessionIq in 'base\Xmpp.Iq.SessionIq.pas',
+  Xmpp.Iq.Vcard.Address in 'base\Xmpp.Iq.Vcard.Address.pas',
+  Xmpp.Iq.Vcard.Email in 'base\Xmpp.Iq.Vcard.Email.pas',
+  Xmpp.Iq.Vcard.Name in 'base\Xmpp.Iq.Vcard.Name.pas',
+  Xmpp.Iq.Vcard.Organization in 'base\Xmpp.Iq.Vcard.Organization.pas',
+  Xmpp.Iq.Vcard in 'base\Xmpp.Iq.Vcard.pas',
+  Xmpp.Iq.Vcard.Photo in 'base\Xmpp.Iq.Vcard.Photo.pas',
+  Xmpp.Iq.Vcard.Telephone in 'base\Xmpp.Iq.Vcard.Telephone.pas',
+  Xmpp.Iq.VcardIq in 'base\Xmpp.Iq.VcardIq.pas',
+  Xmpp.Item in 'base\Xmpp.Item.pas',
+  Xmpp.shim.Header in 'base\Xmpp.shim.Header.pas',
+  Xmpp.shim.Headers in 'base\Xmpp.shim.Headers.pas',
+  Xmpp.Stanza in 'base\Xmpp.Stanza.pas',
+  Xmpp.Stream in 'base\Xmpp.Stream.pas',
+  XmppId in 'base\XmppId.pas',
+  Time in 'util\Time.pas',
+  XMPPEvent in 'XMPPEvent.pas',
+  MessageGrabber in 'client\MessageGrabber.pas',
+  PresenceGrabber in 'client\PresenceGrabber.pas',
+  Xmpp.Client.sasl.Mechanism in 'base\Xmpp.Client.sasl.Mechanism.pas',
+  Xmpp.Client.sasl.SaslEventArgs in 'base\Xmpp.Client.sasl.SaslEventArgs.pas',
+  Xmpp.Client.sasl.SaslHandler in 'base\Xmpp.Client.sasl.SaslHandler.pas',
+  util.Random in 'util\util.Random.pas',
+  StringUtils in 'util\StringUtils.pas',
+  XmppClient in 'client\XmppClient.pas',
+  XmppClientExtension in 'client\XmppClientExtension.pas',
+  XmppVCardManager in 'client\XmppVCardManager.pas';
+
+end.
