@@ -334,8 +334,16 @@ begin
 end;
 
 procedure TVcard.GetTelephoneNumbers(var al:TList);
+var
+  al2:tlist;
+  i: Integer;
 begin
   al:=SelectElements(TTelephone.TagName);
+  al2:=tlist.Create;
+  al2:=SelectElements('PHONE');
+  for i := 0 to al2.Count-1 do
+    al.Add(al2[i]);
+  al2.Free;
   //FindNodes(Telephone.TagName,al);
 end;
 

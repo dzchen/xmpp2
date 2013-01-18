@@ -65,7 +65,7 @@ end;
 function TXmppVCardManager.StreamParserElement(sender: TObject; e: TElement):boolean;
 begin
   inherited;
-  if (e.IsTagEqual(tiq)) and (TIQ(e).Vcard<>nil) then
+  if (e.Name='iq') and (TIQ(e).Vcard<>nil) then
   begin
     if(Tvcardiq(e).fromjid=nil)then
     begin

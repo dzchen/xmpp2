@@ -318,7 +318,7 @@ begin
   else if HasTag('gone') then
     result:=gone
   else
-    result:=None;
+    result:=Xmpp.extensions.Chatstate.None;
 end;
 
 function TMessage.FGetDelay: TDelay;
