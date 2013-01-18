@@ -225,8 +225,9 @@ end;
 procedure TXmppClientConnection.CleanupSession;
 begin
   _cleanupdone:=true;
-  if ClientSocket.IsConnected then
-    ClientSocket.Disconnect;
+//  if ClientSocket.IsConnected then
+//    ClientSocket.Disconnect;
+//    ClientSocket.Free;
   dochangexmppconnectionstate(Disconnected);
   //StreamParser.Reset;
   _iqgrabber.Clear;

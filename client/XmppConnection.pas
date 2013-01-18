@@ -26,7 +26,6 @@ type
     _keepaliveinterval:integer;
     _keepalive:Boolean;
     FParser:TXMLTagParser;
-    _lock:TCriticalSection;
     FRoot,FRootTag,
     FBuff:string;
 
@@ -120,7 +119,6 @@ begin
   _SocketConnectionType:=Direct;
   _keepaliveinterval:=120;
   _keepalive:=true;
-  _lock:=TCriticalSection.Create;
   InitSocket;
   FParser := TXMLTagParser.Create;
 end;
@@ -145,11 +143,10 @@ end;
 
 destructor TXmppConnection.Destroy;
 begin
-  FreeAndNil(_lock);
   DestroyKeepAliveTimer;
   Close;
   SocketDisconnect;
-  
+ FreeAndNil(_clientsocket);
 end;
 
 procedure TXmppConnection.DestroyKeepAliveTimer;

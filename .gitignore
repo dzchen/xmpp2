@@ -167,3 +167,5 @@ lib/*.dcu
 lib/*.dcp
 lib/*.bpi
 lib/*.lib
+/lib
+/Win32
