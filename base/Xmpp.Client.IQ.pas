@@ -9,6 +9,7 @@ const
 		'result',
 		'error');
 type
+  TIQTYPE=(iq_get,iq_set,iq_result,iq_error);
   TIQ=class(TStanza)
   const
     TagName='iq';

@@ -2,7 +2,7 @@ unit Xmpp.Iq.Vcard.Photo;
 
 interface
 uses
-  Element,XmppUri,Graphics,Classes,EncdDecd;
+  Element,XmppUri,Graphics,Classes,EncdDecd,httpsend;
 
 type
   TImageFormat=(ifnone=-1,Bmp=0,Emf,Exif,Gif,Icon,Jpeg,Png,Tiff,Wmf);
@@ -57,7 +57,7 @@ function TPhoto.FGetImage: TBitmap;
 var
   tb:TBitmap;
   buf:TBytesStream;
-  //http:TIdHTTP;
+  http:THTTPSend;
 begin
   if HasTag('BINVAL') then
   begin
@@ -69,13 +69,20 @@ begin
   end
   else if HasTag('EXTVAL') then
   begin
-    //http:=TIdHTTP.Create();
+    http:=THTTPSend.Create();
+    try
+    HTTP.HTTPMethod('GET', GetTag('EXTVAL'));
+    buf:=TBytesStream.Create();
+    buf.LoadFromStream(http.Document);
     //http.Get(GetTag('EXTVAL'),buf);
     tb:=TBitmap.Create;
 
     tb.LoadFromStream(buf);
     Result:=tb;
     buf.Free;
+    finally
+      http.Free;
+    end;
   end
   else
     Result:=nil;

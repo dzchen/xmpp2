@@ -62,7 +62,7 @@ type
   private
     _cnonce,_nc,_digesturi,_response,_authzid:string;
     hasher:TIdHashMessageDigest5;
-    encoder:TIdEncoderMIME;
+
     function SupportsAuth(qop:string):Boolean;
     procedure GenerateCnonce();
     procedure GenerateNc();
@@ -240,7 +240,7 @@ end;
 constructor TStep2.Create;
 begin
   hasher:=TIdHashMessageDigest5.Create;
-  encoder:=TIdEncoderMIME.Create();
+
 
 end;
 
@@ -340,7 +340,8 @@ begin
 	sb.Append(Realm);
 	sb.Append(':');
 	sb.Append(Password);
-  h1:=hasher.HashString(sb.ToString,TEncoding.UTF8);
+  h1:=BytesOf(MD5(UTF8Encode(sb.ToString)));
+  //h1:=hasher.HashString(sb.ToString,TEncoding.UTF8);
   sb.Remove(0,sb.Length);
   sb.Append(':');
 	sb.Append(Nonce);

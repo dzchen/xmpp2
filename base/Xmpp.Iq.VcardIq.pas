@@ -37,7 +37,7 @@ end;
 
 constructor TVcardIq.Create();
 begin
-  inherited Create();
+  inherited;
   _vcard:=TVcard.Create();
   GenerateId;
   FSetQuery(_vcard);

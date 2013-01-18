@@ -1,5 +1,7 @@
 unit XmppConnection;
 
+{$DEFINE DEBUG_XML}
+
 interface
 uses
 SysUtils ,
@@ -33,6 +35,9 @@ type
     FOnReadXml:TXmlHandler;
     FOnWriteXml:TXmlHandler;
     FOnError:TErrorHandler;
+    {$IFDEF DEBUG_XML}
+    FOnDebugXML:TTCPEvent;
+    {$ENDIF}
 //    FOnReadSocketData:OnSocketDataHandler;
 //    FOnWriteSocketData:OnSocketDataHandler;
     procedure FSetServer(value:string);
@@ -80,7 +85,9 @@ type
     property OnError:TErrorHandler read FOnError write FOnError;
 //    property OnReadSocketData:OnSocketDataHandler read FOnReadSocketData write FOnReadSocketData;
 //    property OnWriteSocketData:OnSocketDataHandler read FOnWriteSocketData write FOnWriteSocketData;
-
+    {$IFDEF DEBUG_XML}
+    property OnDebugXML:TTCPEvent read FOnDebugXML write FOnDebugXML;
+    {$ENDIF}
 
     procedure SocketOnConnect(sender:TObject);virtual;
     procedure SocketOnDisconnect(sender:TObject);virtual;
@@ -454,7 +461,7 @@ begin
   begin
 {$IFDEF DEBUG_XML}
     if Assigned(OnDebugXML) then
-      FOnDebugXML(Self,'<= '+Value);
+      FOnDebugXML(Self,'<= '+xml);
 {$ENDIF}
     if (xml<>('</'+FRootTag+'>')) then
       ProsesData(xml)

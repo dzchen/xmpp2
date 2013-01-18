@@ -208,7 +208,7 @@ procedure TTCPThread.Execute;
 var
   J,C:TTCPCommand;
   inp:AnsiString;
-  i,l:integer;
+  i,l,x:integer;
 begin
   while not Terminated do begin
     J := FOwner.PopCommand;
@@ -269,8 +269,14 @@ begin
             end;
             C.Free;
           end;
-          if sock.CanRead(20) then
+          if sock.CanReadEx(20) or (sock.WaitingData>0) then
           begin
+//            x:=sock.WaitingDataEx;
+//            if x>0 then
+//            begin
+//              inp := sock.RecvBufferStr(x,0);
+//            end;
+
             inp:= sock.RecvPacket(0);
             if ((_remain_utf) <> '') then begin
                 inp := _remain_utf + inp;

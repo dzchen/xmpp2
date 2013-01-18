@@ -2,7 +2,7 @@ unit XmppVCardManager;
 
 interface
 uses
-  XmppConnection,XmppClientExtension,Xmpp.Iq.VcardIq,Element;
+  XmppConnection,XmppClientExtension,Xmpp.Iq.VcardIq,Element,xmpp.client.iq,jid;
 type
   TVCardReceivedHandler=procedure(sender:TObject;iq:tvcardiq) of object;
   TXmppVCardManager=class(TXmppClientExtension)
@@ -49,7 +49,7 @@ procedure TXmppVCardManager.RequestVCard(bareJid: string);
 var
   iq:tvcardiq;
 begin
-  iq:=tvcardiq.create('get',bareJid);
+  iq:=tvcardiq.create('get',tjid.create(bareJid));
   client.send(iq);
 end;
 
@@ -65,7 +65,7 @@ end;
 function TXmppVCardManager.StreamParserElement(sender: TObject; e: TElement):boolean;
 begin
   inherited;
-  if e.istagequal(tvcardiq) then
+  if (e.IsTagEqual(tiq)) and (TIQ(e).Vcard<>nil) then
   begin
     if(Tvcardiq(e).fromjid=nil)then
     begin
